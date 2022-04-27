@@ -3,12 +3,12 @@ const DBConfig = {
   host: 'localhost',
   port: 5432,
   username: 'postgres',
-  password: '1',
-  database: 'TEST_SWAGGER',
+  password: '123',
+  database: 'review-food',
   entities: ['dist/**/*.entity.js'],
-  migrations: ['dist/databases/migrations/*.js'],
-  cli: { migrationsDir: 'src/databases/migrations' },
-  synchronize: false,
+  migrations: ['dist/database/migrations/*.js'],
+  cli: { migrationsDir: 'src/database/migrations' },
+  synchronize: true,
 }
 
 module.exports = DBConfig;
