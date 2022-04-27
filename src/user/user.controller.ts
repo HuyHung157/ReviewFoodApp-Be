@@ -1,15 +1,21 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
-import { CreateUserDTO } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
-import { UserService } from "./user.service";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { CreateUserDTO } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserService } from './user.service';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
-  constructor(
-    private userService: UserService,
-  ) { }
+  constructor(private userService: UserService) {}
 
   @Post()
   createUser(@Body() createUserDTO: CreateUserDTO) {
@@ -28,7 +34,10 @@ export class UserController {
   }
 
   @Put(':id')
-  updateUserById(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  updateUserById(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
     return this.userService.updateUserById(id, updateUserDto);
   }
 

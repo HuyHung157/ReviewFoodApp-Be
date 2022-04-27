@@ -5,10 +5,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot(),
-    UserModule,
-  ],
+  imports: [TypeOrmModule.forRoot(), UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
