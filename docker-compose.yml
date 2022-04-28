@@ -1,0 +1,25 @@
+version: '3'
+services: 
+  be:
+    container_name: review-food-be
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on: 
+      - db
+    ports: 
+      - "3000:3000" # expose-to-the-world : only-in-the-docker
+  db:
+    image: postgres:latest
+    container_name: food_db
+    restart: always
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DATABASE}
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./food_db:/var/lib/postgresql/data
