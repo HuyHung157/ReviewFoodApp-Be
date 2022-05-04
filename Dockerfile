@@ -9,8 +9,10 @@ RUN npm install
 # COPY ./config ./config
 
 # COPY ./json ./json
-COPY ./js ./js
+COPY ./*.js ./*.js
 
 COPY ./dist ./dist
+
+COPY ./ormconfig.js ./ormconfig.js
 
 CMD ["node", "dist/main"]
