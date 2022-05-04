@@ -1,14 +1,14 @@
 version: '3.8'
 services: 
   be:
-    container_name: review-food-be
+    container_name: review-food
     build: 
       context: .
       dockerfile: ./Dockerfile
     depends_on: 
       - db
     ports: 
-      - "3000:3000" # expose-to-the-world : only-in-the-docker
+      - "80:80" # expose-to-the-world : only-in-the-docker
     restart: on-failure
     
   db:

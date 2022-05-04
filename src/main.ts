@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const PORT = +process.env.APP_PORT | 3000;
+  const PORT = +process.env.APP_PORT | 80;
   //config swagger
   const config = new DocumentBuilder()
     .setTitle('Review Food API')
