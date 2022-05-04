@@ -6,11 +6,6 @@ COPY package*.json ./
 
 RUN npm install
 
-# COPY ./config ./config
-
-# COPY ./json ./json
-COPY ./*.js ./*.js
-
 COPY ./dist ./dist
 
 COPY ./ormconfig.js ./ormconfig.js
