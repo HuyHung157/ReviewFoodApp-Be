@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { ReviewEntity } from 'src/review/review.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Gender } from './enums/gender.enum';
 
 @Entity({ name: 'user' })
@@ -26,4 +27,7 @@ export class UserEntity {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @OneToMany( () => ReviewEntity, review => review.user, { nullable: true }, )
+  reviews?: ReviewEntity[];
 }

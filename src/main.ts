@@ -10,7 +10,7 @@ async function bootstrap() {
     .setTitle('Review Food API')
     .setDescription('This is the ReviewFoodApp API description')
     .setVersion('1.0')
-    .addTag('foods')
+    // .addTag('foods')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);

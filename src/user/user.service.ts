@@ -11,6 +11,7 @@ export class UserService {
     @Inject('USER_REPOSITORY')
     private readonly userRepository: Repository<UserEntity>,
   ) {}
+  
   async createUser(createUserDTO: CreateUserDTO) {
     const { username, password } = createUserDTO;
     const isUserExisted = await this.findUserByUsername(username);

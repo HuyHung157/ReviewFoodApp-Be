@@ -13,7 +13,7 @@ import { AuthModule } from './auth/auth.module';
     TypeOrmModule.forRoot(), 
     AuthModule,
     UserModule,
-    ShopModule
+    ShopModule,
     ReviewModule,
     FoodModule,
   ],

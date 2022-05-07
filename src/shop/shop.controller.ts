@@ -15,7 +15,7 @@ export class ShopController {
   }
 
   @Get()
-  @ApiOkResponse({ description: 'List all users' })
+  @ApiOkResponse({ description: 'List all shops' })
   async getShopList() {
     return await this.shopService.getShopList();
   }
@@ -25,7 +25,7 @@ export class ShopController {
     return this.shopService.getDetailShop(id);
   }
 
-  @Get(':shopName')
+  @Get('/name=:shopName')
   findShopByShopName(@Param('shopName') shopName: string) {
     return this.shopService.findShopByShopName(shopName);
   }

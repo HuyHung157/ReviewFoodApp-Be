@@ -8,10 +8,11 @@ import { ShopEntity } from './shop.entity';
 export class ShopService {
   constructor(
     @Inject('SHOP_REPOSITORY')
-    private readonly userRepository: Repository<ShopEntity>,
+    private readonly shopRepository: Repository<ShopEntity>,
   ) {}
+
   async createShop(createShopDTO: CreateShopDTO) {
-    await this.userRepository.save(createShopDTO);
+    await this.shopRepository.save(createShopDTO);
     return {
       statusCode: 200,
       message: 'Create Shop successfully',
@@ -19,23 +20,23 @@ export class ShopService {
   }
 
   getShopList() {
-    return this.userRepository.find();
+    return this.shopRepository.find();
   }
 
   getDetailShop(id: string) {
-    return this.userRepository.findOne(id);
+    return this.shopRepository.findOne(id);
   }
 
   updateShopById(id: string, updateShopDto: UpdateShopDTO) {
-    return this.userRepository.update(id, updateShopDto);
+    return this.shopRepository.update(id, updateShopDto);
   }
 
   removeShopById(id: string) {
-    return this.userRepository.delete(id);
+    return this.shopRepository.delete(id);
   }
 
   async findShopByShopName(shopName: string): Promise<ShopEntity> {  
-    const user = await this.userRepository.findOne({ shopName });
+    const user = await this.shopRepository.findOne({ shopName });
     return user;
   }
 }
