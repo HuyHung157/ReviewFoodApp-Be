@@ -1,0 +1,15 @@
+import { Body, Controller, Post } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { PostReviewShopDTO } from './dto/post-review-shop.dto';
+import { ReviewService } from './review.service';
+
+@ApiTags('review')
+@Controller('review')
+export class ReviewController {
+  constructor(private reviewService: ReviewService) {}
+
+  @Post()
+  createUser(@Body() postReviewShopDTO: PostReviewShopDTO) {
+    return this.reviewService.postReviewShop(postReviewShopDTO);
+  }
+}

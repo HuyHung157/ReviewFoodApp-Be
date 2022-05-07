@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
     TypeOrmModule.forRoot(), 
     UserModule,
     ShopModule
+    ReviewModule,
     FoodModule,
   ],
   controllers: [AppController],
