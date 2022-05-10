@@ -8,5 +8,4 @@ export class FoodService {
     @Inject('FOOD_REPOSITORY')
     private readonly foodRepository: Repository<FoodEntity>,
   ) {}
-
 }

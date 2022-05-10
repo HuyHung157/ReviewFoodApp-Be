@@ -10,7 +10,7 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(), 
+    TypeOrmModule.forRoot(),
     AuthModule,
     UserModule,
     ShopModule,

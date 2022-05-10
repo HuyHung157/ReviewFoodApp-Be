@@ -1,6 +1,11 @@
 import { FoodEntity } from 'src/food/food.entity';
 import { ReviewEntity } from 'src/review/review.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
 
 @Entity({ name: 'shop' })
 export class ShopEntity {
@@ -20,9 +25,9 @@ export class ShopEntity {
   address: string;
 
   @Column({ default: true })
-  isDelivery: Boolean;
+  isDelivery: boolean;
 
-  @Column({ name: 'totalLike'  , default: 0 })
+  @Column({ name: 'totalLike', default: 0 })
   totalLike: number;
 
   @Column({ name: 'totalDislike', default: 0 })
@@ -34,9 +39,9 @@ export class ShopEntity {
   @Column({ default: true })
   isActive: boolean;
 
-  @OneToMany( () => ReviewEntity, review => review.shop, { nullable: true }, )
+  @OneToMany(() => ReviewEntity, (review) => review.shop, { nullable: true })
   reviews?: ReviewEntity[];
 
-  @OneToMany( () => FoodEntity, food => food.shop, { nullable: true }, )
+  @OneToMany(() => FoodEntity, (food) => food.shop, { nullable: true })
   foods?: FoodEntity[];
 }

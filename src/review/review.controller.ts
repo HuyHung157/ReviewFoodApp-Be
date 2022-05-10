@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PostReviewShopDTO } from './dto/post-review-shop.dto';
 import { ReviewService } from './review.service';
@@ -11,5 +11,10 @@ export class ReviewController {
   @Post()
   createUser(@Body() postReviewShopDTO: PostReviewShopDTO) {
     return this.reviewService.postReviewShop(postReviewShopDTO);
+  }
+
+  @Get(':shopId')
+  getListReviewByShopId(@Param('id') id: string) {
+    return this.reviewService.getListReviewByShopId(id);
   }
 }

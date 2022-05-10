@@ -1,5 +1,11 @@
 import { ShopEntity } from 'src/shop/shop.entity';
-import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  JoinColumn,
+  ManyToOne,
+} from 'typeorm';
 
 @Entity({ name: 'food' })
 export class FoodEntity {
@@ -33,7 +39,7 @@ export class FoodEntity {
   })
   shopId: string;
 
-  @ManyToOne( () => ShopEntity, shop => shop.reviews, )
+  @ManyToOne(() => ShopEntity, (shop) => shop.reviews)
   @JoinColumn({ name: 'shopId' })
   shop: ShopEntity;
 }

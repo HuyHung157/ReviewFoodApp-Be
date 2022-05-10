@@ -14,23 +14,24 @@ export class AuthService {
   async signIn(account: SignInDTO) {
     const { username, password } = account;
     const user = await this.userRepository.findOne({ username });
-    if(!user) {
+    if (!user) {
       return {
         statusCode: 400,
         message: 'Username not exist',
       };
     }
     const isValid = await this.comparePassword(password, user.password);
-    if(!isValid) {
+    if (!isValid) {
       return {
         statusCode: 400,
         message: 'Password is not correct',
-      }
+      };
     }
     return {
       statusCode: 200,
       message: 'Sign in successfully',
-    }
+      data: user,
+    };
   }
 
   comparePassword(passwordInput: string, passwordHash: string): boolean {

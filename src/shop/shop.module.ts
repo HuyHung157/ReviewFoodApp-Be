@@ -9,6 +9,7 @@ import { DatabaseModule } from 'src/database/database.module';
 @Module({
   imports: [TypeOrmModule.forFeature([ShopEntity]), DatabaseModule],
   controllers: [ShopController],
-  providers: [...ShopProvider, ShopService]
+  providers: [...ShopProvider, ShopService],
+  exports: [ShopService],
 })
 export class ShopModule {}

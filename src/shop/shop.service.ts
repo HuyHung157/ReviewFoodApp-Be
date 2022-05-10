@@ -16,7 +16,7 @@ export class ShopService {
     return {
       statusCode: 200,
       message: 'Create Shop successfully',
-    };;
+    };
   }
 
   getShopList() {
@@ -35,7 +35,7 @@ export class ShopService {
     return this.shopRepository.delete(id);
   }
 
-  async findShopByShopName(shopName: string): Promise<ShopEntity> {  
+  async findShopByShopName(shopName: string): Promise<ShopEntity> {
     const user = await this.shopRepository.findOne({ shopName });
     return user;
   }

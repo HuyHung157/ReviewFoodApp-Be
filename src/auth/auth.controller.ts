@@ -10,17 +10,16 @@ import { SignInDTO } from './dto/sign-in.dto';
 export class AuthController {
   constructor(
     private authService: AuthService,
-    private userService: UserService
-    ) {}
+    private userService: UserService,
+  ) {}
 
-  @Post("/signUp")
+  @Post('/signUp')
   signUp(@Body() createUserDTO: CreateUserDTO) {
     return this.userService.createUser(createUserDTO);
   }
 
-  @Post("/signIn")
+  @Post('/signIn')
   signIn(@Body() signInDTO: SignInDTO) {
     return this.authService.signIn(signInDTO);
   }
-
 }
