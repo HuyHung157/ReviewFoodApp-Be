@@ -7,7 +7,7 @@ export class CreateUserDTO {
   @ApiProperty()
   firstName: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   lastName: string;
 
   @ApiProperty()
@@ -21,7 +21,7 @@ export class CreateUserDTO {
   @IsNotEmpty()
   password: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   description: string;
 
   @ApiProperty()

@@ -1,17 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Gender } from '../enums/gender.enum';
 
-export class UpdateUserDto {
+export class UpdateUserDTO {
   @ApiProperty()
   firstName: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   lastName: string;
 
   @ApiProperty()
   gender: Gender;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   description: string;
 
   @ApiProperty()

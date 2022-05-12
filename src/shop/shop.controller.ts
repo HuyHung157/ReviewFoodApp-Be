@@ -33,7 +33,8 @@ export class ShopController {
     return this.shopService.getDetailShop(id);
   }
 
-  @Get('/name=:shopName')
+  @Get('/name/:shopName')
+  @ApiOkResponse({ description: 'Get shop by shop name  ' })
   findShopByShopName(@Param('shopName') shopName: string) {
     return this.shopService.findShopByShopName(shopName);
   }

@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateUserDTO } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDTO } from './dto/update-user.dto';
 import { UserService } from './user.service';
 
 @ApiTags('user')
@@ -36,7 +36,7 @@ export class UserController {
   @Put(':id')
   updateUserById(
     @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateUserDto: UpdateUserDTO,
   ) {
     return this.userService.updateUserById(id, updateUserDto);
   }

@@ -15,17 +15,17 @@ export class FoodEntity {
   @Column()
   foodName: string;
 
-  @Column()
+  @Column({ nullable: true })
   imgUrl: string;
 
-  @Column()
-  price: string;
+  @Column({ nullable: true })
+  price: number;
 
   @Column({ nullable: true })
-  oldPrice: string;
+  oldPrice: number;
 
-  @Column({ nullable: true })
-  discount: string;
+  @Column({ nullable: true, default: 0 })
+  discount: number;
 
   @Column({ nullable: true })
   description: string;

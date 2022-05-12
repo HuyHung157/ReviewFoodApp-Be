@@ -2,7 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ShopService } from 'src/shop/shop.service';
 import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
-import { PostReviewShopDTO } from './dto/post-review-shop.dto';
+import { CreateReviewShopDTO } from './dto/create-review.dto';
+import { UpdateReviewShopDTO } from './dto/update-review.dto';
 import { ReviewEntity } from './review.entity';
 
 @Injectable()
@@ -14,8 +15,8 @@ export class ReviewService {
     private readonly shopService: ShopService,
   ) {}
 
-  async postReviewShop(data: PostReviewShopDTO) {
-    const { userId, shopId, content } = data;
+  async postReviewShop(data: CreateReviewShopDTO) {
+    const { userId, shopId } = data;
 
     const user = await this.userService.getDetailUser(userId);
     if (!user) {
@@ -64,5 +65,13 @@ export class ReviewService {
       totalItems: count,
       items,
     };
+  }
+
+  updateReviewShopById(id: string, updateReviewShopDto: UpdateReviewShopDTO) {
+    return this.reviewRepository.update(id, updateReviewShopDto);
+  }
+
+  removeReviewById(id: string) {
+    return this.reviewRepository.delete(id);
   }
 }

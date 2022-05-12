@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { CreateUserDTO } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './user.entity';
 import * as bcrypt from 'bcryptjs';
 import { validate } from 'class-validator';
+import { UpdateUserDTO } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -48,7 +48,7 @@ export class UserService {
     return this.userRepository.findOne(id);
   }
 
-  updateUserById(id: string, updateUserDto: UpdateUserDto) {
+  updateUserById(id: string, updateUserDto: UpdateUserDTO) {
     return this.userRepository.update(id, updateUserDto);
   }
 

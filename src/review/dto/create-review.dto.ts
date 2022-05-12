@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class PostReviewShopDTO {
+export class CreateReviewShopDTO {
   @ApiProperty()
   userId: string;
 
@@ -10,7 +10,7 @@ export class PostReviewShopDTO {
   @ApiProperty()
   content: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   imgUrl: string;
 
   @ApiProperty()

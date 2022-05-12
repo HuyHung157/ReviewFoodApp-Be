@@ -17,13 +17,13 @@ export class ReviewEntity {
   @Column()
   content: string;
 
-  @Column()
+  @Column({ nullable: true })
   imgUrl: string;
 
-  @Column({ name: 'totalLike', default: 0 })
+  @Column({ name: 'totalLike', default: 0, nullable: true })
   totalLike: number;
 
-  @Column({ name: 'totalDislike', default: 0 })
+  @Column({ name: 'totalDislike', default: 0, nullable: true })
   totalDislike: number;
 
   @CreateDateColumn({

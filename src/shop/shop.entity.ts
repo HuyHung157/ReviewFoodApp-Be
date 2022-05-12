@@ -1,11 +1,6 @@
 import { FoodEntity } from 'src/food/food.entity';
 import { ReviewEntity } from 'src/review/review.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: 'shop' })
 export class ShopEntity {
@@ -15,16 +10,16 @@ export class ShopEntity {
   @Column()
   shopName: string;
 
-  @Column()
+  @Column({ nullable: true })
   logoUrl: string;
 
-  @Column()
+  @Column({ nullable: true })
   bannerUrl: string;
 
   @Column()
   address: string;
 
-  @Column({ default: true })
+  @Column({ nullable: true, default: true })
   isDelivery: boolean;
 
   @Column({ name: 'totalLike', default: 0 })

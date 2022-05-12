@@ -1,20 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateShopDTO {
+export class UpdateFoodDTO {
   @ApiProperty()
-  shopName: string;
+  foodName: string;
 
   @ApiProperty({ required: false })
-  logoUrl?: string;
+  imgUrl?: string;
 
   @ApiProperty({ required: false })
-  bannerUrl?: string;
+  price: number;
 
-  @ApiProperty()
-  address: string;
+  @ApiProperty({ required: false })
+  oldPrice: number;
 
-  @ApiProperty()
-  isDelivery: boolean;
+  @ApiProperty({ required: false })
+  discount: number;
 
   @ApiProperty({ required: false })
   description: string;
