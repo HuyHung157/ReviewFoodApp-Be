@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { join } from 'path';
+import { resolve } from 'path';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -21,8 +21,8 @@ async function bootstrap() {
   console.log(`Server running on http://localhost:${PORT}`);
   console.log(`Swagger running on http://localhost:${PORT}/api`);
   app.useGlobalPipes(new ValidationPipe());
-  app.useStaticAssets(join(__dirname, '..', '/src/public'));
-  app.setBaseViewsDir(join(__dirname, '..', '/src/views'));
+  app.useStaticAssets(resolve('./src/public'));
+  app.setBaseViewsDir(resolve('./src/views'));
   app.setViewEngine('ejs');
   await app.listen(PORT);
 }
