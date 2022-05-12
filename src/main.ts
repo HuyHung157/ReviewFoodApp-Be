@@ -2,7 +2,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { resolve } from 'path';
+import { join, resolve } from 'path';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -23,6 +23,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useStaticAssets(resolve('./src/public'));
   app.setBaseViewsDir(resolve('./src/views'));
+  console.log(join('dirname: ', __dirname));
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('ejs');
   await app.listen(PORT);
 }
