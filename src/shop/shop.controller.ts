@@ -31,14 +31,13 @@ export class ShopController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get shop detail by Id' })
+  @ApiOperation({ summary: 'Get shop detail' })
   getDetailShop(@Param('id') id: string) {
     return this.shopService.getDetailShop(id);
   }
 
   @Get('/name/:shopName')
   @ApiOperation({ summary: 'Get shop detail by shopName' })
-  @ApiOkResponse({ description: 'Get shop by shop name  ' })
   findShopByShopName(@Param('shopName') shopName: string) {
     return this.shopService.findShopByShopName(shopName);
   }

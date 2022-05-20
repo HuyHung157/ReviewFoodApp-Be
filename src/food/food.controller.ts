@@ -49,7 +49,7 @@ export class FoodController {
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Update food by id' })
+  @ApiOperation({ summary: 'Update food' })
   updateFoodById(
     @Param('id') id: string,
     @Body() updateFoodDto: UpdateFoodDTO,
@@ -58,7 +58,7 @@ export class FoodController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete food by id' })
+  @ApiOperation({ summary: 'Delete food' })
   removeFoodById(@Param('id') id: string) {
     return this.foodService.removeFoodById(id);
   }

@@ -18,19 +18,19 @@ export class ReviewController {
   constructor(private reviewService: ReviewService) {}
 
   @Post()
-  @ApiOperation({ summary: 'create review shop' })
+  @ApiOperation({ summary: 'Create review shop' })
   createUser(@Body() postReviewShopDTO: CreateReviewShopDTO) {
     return this.reviewService.postReviewShop(postReviewShopDTO);
   }
 
   @Get(':shopId')
-  @ApiOperation({ summary: 'get detail review by shopId' })
+  @ApiOperation({ summary: 'Get review detail by shopId' })
   getListReviewByShopId(@Param('shopId') id: string) {
     return this.reviewService.getListReviewByShopId(id);
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Update review by id' })
+  @ApiOperation({ summary: 'Update review' })
   updateFoodById(
     @Param('id') id: string,
     @Body() updateReviewShopDto: UpdateReviewShopDTO,
@@ -39,7 +39,7 @@ export class ReviewController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete review by id' })
+  @ApiOperation({ summary: 'Delete review' })
   removeFoodById(@Param('id') id: string) {
     return this.reviewService.removeReviewById(id);
   }
