@@ -28,6 +28,7 @@ async function bootstrap() {
 
   console.log(`Server running on http://localhost:${PORT}`);
   console.log(`Swagger running on http://localhost:${PORT}/api`);
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   app.useGlobalPipes(new ValidationPipe());
   app.useStaticAssets(resolve('./src/public'));
   app.setBaseViewsDir(resolve('./src/views'));

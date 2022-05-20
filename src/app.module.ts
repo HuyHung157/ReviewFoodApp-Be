@@ -8,9 +8,11 @@ import { ReviewModule } from './review/review.module';
 import { FoodModule } from './food/food.module';
 import { AuthModule } from './auth/auth.module';
 import { BookmarkModule } from './bookmark/bookmark.module';
+import { WinstonModule } from './common/modules/winston/winston.module';
 
 @Module({
   imports: [
+    WinstonModule,
     TypeOrmModule.forRoot(),
     AuthModule,
     UserModule,

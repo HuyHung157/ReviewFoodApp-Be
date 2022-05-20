@@ -5,12 +5,18 @@ import { UserEntity } from './user.entity';
 import * as bcrypt from 'bcryptjs';
 import { validate } from 'class-validator';
 import { UpdateUserDTO } from './dto/update-user.dto';
+import { MailData } from 'src/mail/interfaces/mail-data.interface';
+import { MailTemplateService } from 'src/mail/services/mail-template.service';
+import { MailService } from 'src/mail/services/mail.service';
+import moment from 'moment-timezone';
 
 @Injectable()
 export class UserService {
   constructor(
     @Inject('USER_REPOSITORY')
     private readonly userRepository: Repository<UserEntity>,
+    private readonly mailService: MailService,
+    private readonly mailTemplateService: MailTemplateService,
   ) {}
 
   async createUser(createUserDTO: CreateUserDTO) {
@@ -29,11 +35,17 @@ export class UserService {
     }
 
     const hashedPassword = await this.hashPassword(password);
-    const user = {
+    const userData = {
       ...createUserDTO,
       password: hashedPassword,
     };
-    await this.userRepository.save(user);
+
+    const user = await this.userRepository.save(userData);
+
+    if (user) {
+      this.sendSignUpEmail(user, 'en');
+    }
+
     return {
       statusCode: 200,
       message: 'Create User successfully',
@@ -72,5 +84,20 @@ export class UserService {
   async findUserByUsername(username: string): Promise<UserEntity> {
     const user = await this.userRepository.findOne({ username });
     return user;
+  }
+
+  private async sendSignUpEmail(user: UserEntity, language: string) {
+    const templateName = 'sign-up';
+    const currentYear = moment().year();
+    const templateData = {
+      firstName: user.firstName,
+      currentYear
+    };
+    const template = await this.mailTemplateService.fetchTemplate(templateName, templateData, language);
+    const data: MailData = {
+      ...template,
+      to: user.username,
+    };
+    await this.mailService.sendMail(data);
   }
 }
