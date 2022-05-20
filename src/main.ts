@@ -19,9 +19,9 @@ async function bootstrap() {
     )
     .setVersion('1.0')
     // .addTag('foods')
-    .addServer('http://localhost:3000', 'Localhost')
-    .addServer('huyhung.online', 'Production')
-    .addBearerAuth()
+    // .addServer('http://localhost:3000', 'Localhost')
+    // .addServer('huyhung.online/api', 'Production')
+    // .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
