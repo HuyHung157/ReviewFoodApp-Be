@@ -8,6 +8,8 @@ RUN npm install
 
 COPY ./dist ./dist
 
+COPY ./src/views ./views
+
 COPY ./ormconfig.js ./ormconfig.js
 
 CMD ["node", "dist/main"]

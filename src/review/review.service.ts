@@ -53,14 +53,14 @@ export class ReviewService {
       };
     }
 
-    const queryCategoryHome = this.reviewRepository
+    const query = this.reviewRepository
       .createQueryBuilder('review')
       .where('review.shopId = :shopId', { shopId: shop.id })
       .andWhere('review.isActive = true')
       .orderBy('review.createdAt', 'ASC')
       .leftJoinAndSelect('review.user', 'user', 'user.isActive = true');
 
-    const [items, count] = await queryCategoryHome.getManyAndCount();
+    const [items, count] = await query.getManyAndCount();
     return {
       totalItems: count,
       items,

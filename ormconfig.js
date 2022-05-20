@@ -9,6 +9,6 @@ const DBConfig = {
   migrations: ['dist/database/migrations/*.js'],
   cli: { migrationsDir: 'src/database/migrations' },
   synchronize: true,
-}
+};
 
 module.exports = DBConfig;
