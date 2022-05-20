@@ -12,8 +12,16 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Review Food API')
     .setDescription('This is the ReviewFoodApp API description')
+    .setContact(
+      'Trần Huy Hùng',
+      'http://huyhung.online',
+      'hhungtran157@gmail.com',
+    )
     .setVersion('1.0')
     // .addTag('foods')
+    .addServer('http://localhost:3000', 'Localhost')
+    .addServer('huyhung.online', 'Production')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
