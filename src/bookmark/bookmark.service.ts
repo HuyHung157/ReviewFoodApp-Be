@@ -70,11 +70,26 @@ export class BookmarkService {
     };
   }
 
-  updateBookMarkById(id: string, input: UpdateBookMarkDTO) {
-    return this.bookmarkRepository.update(id, input);
+  async updateBookMarkById(id: string, input: UpdateBookMarkDTO) {
+    await this.bookmarkRepository.update(id, input);
+    return {
+      statusCode: 200,
+      message: 'Update Bookmark successfully',
+    }
   }
 
-  removeBookMarkById(id) {
-    return this.bookmarkRepository.delete(id);
+  async removeBookMarkById(id) {
+    try {
+      await this.bookmarkRepository.update({id}, {isActive: false});
+      return {
+        statusCode: 200,
+        message: 'Remove bookmark successfully',
+      };
+    } catch (err) {
+      return {
+        statusCode: 400,
+        message: err.message,
+      };
+    }
   }
 }

@@ -13,7 +13,7 @@ export class AuthService {
 
   async signIn(account: SignInDTO) {
     const { username, password } = account;
-    const user = await this.userRepository.findOne({ username });
+    const user = await this.userRepository.findOne({ username, isActive: true });
     if (!user) {
       return {
         statusCode: 400,

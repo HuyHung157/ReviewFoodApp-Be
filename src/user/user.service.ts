@@ -10,7 +10,6 @@ import { MailTemplateService } from 'src/mail/services/mail-template.service';
 import { MailService } from 'src/mail/services/mail.service';
 import moment from 'moment-timezone';
 import { Role } from './enums/role.enum';
-import { ShopOwnerService } from 'src/shop/shop-owner.service';
 
 @Injectable()
 export class UserService {
@@ -61,24 +60,35 @@ export class UserService {
 
   async getAllShopOwner() {
     const query = this.userRepository
-    .createQueryBuilder('user')
-    .where('user.role = :role', { role: Role.SHOP_OWNER })
-    .andWhere('user.isActive = :isActive', { isActive: true });
+      .createQueryBuilder('user')
+      .where('user.role = :role', { role: Role.SHOP_OWNER })
+      .andWhere('user.isActive = :isActive', { isActive: true });
 
     const [items, totalItems] = await query.getManyAndCount();
     return { items, totalItems };
   }
 
   getDetailUser(id: string) {
-    return this.userRepository.findOne(id);
+    return this.userRepository.findOne({ id, isActive: true });
   }
 
   updateUserById(id: string, updateUserDto: UpdateUserDTO) {
     return this.userRepository.update(id, updateUserDto);
   }
 
-  removeUserById(id: string) {
-    return this.userRepository.delete(id);
+  async removeUserById(id: string) {
+    try {
+      await this.userRepository.update(id, { isActive: false });
+      return {
+        statusCode: 200,
+        message: 'Remove user successfully',
+      };
+    } catch (err) {
+      return {
+        statusCode: 400,
+        message: err.message,
+      };
+    }
   }
 
   async hashPassword(passwordInput: string): Promise<string> {
@@ -95,7 +105,10 @@ export class UserService {
   }
 
   async findUserByUsername(username: string): Promise<UserEntity> {
-    const user = await this.userRepository.findOne({ username });
+    const user = await this.userRepository.findOne({
+      username,
+      isActive: true,
+    });
     return user;
   }
 
@@ -104,9 +117,13 @@ export class UserService {
     const currentYear = moment().year();
     const templateData = {
       firstName: user.firstName,
-      currentYear
+      currentYear,
     };
-    const template = await this.mailTemplateService.fetchTemplate(templateName, templateData, language);
+    const template = await this.mailTemplateService.fetchTemplate(
+      templateName,
+      templateData,
+      language,
+    );
     const data: MailData = {
       ...template,
       to: user.username,
@@ -114,8 +131,11 @@ export class UserService {
     await this.mailService.sendMail(data);
   }
 
-  public async isShopOwnerRole(userId: string): Promise<boolean | {statusCode: number, message: string}> {
-    const user = await this.userRepository.findOne({ id: userId });
+  public async isShopOwnerRole(userId: string): Promise<boolean> {
+    const user = await this.userRepository.findOne({
+      id: userId,
+      isActive: true,
+    });
     if (user && user.role === Role.SHOP_OWNER) {
       return true;
     }

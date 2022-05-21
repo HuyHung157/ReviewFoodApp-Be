@@ -45,7 +45,7 @@ export class FoodService {
   }
 
   getDetailFood(id: string) {
-    return this.foodRepository.findOne(id);
+    return this.foodRepository.findOne({id, isActive: true});
   }
 
   async getListFoodByShopId(shopId: string) {
@@ -57,11 +57,11 @@ export class FoodService {
       };
     }
 
-    return this.foodRepository.find({ shopId });
+    return this.foodRepository.find({ shopId, isActive: true });
   }
 
   async updateFoodById(id: string, input: UpdateFoodDTO) {
-    const food = await this.foodRepository.findOne(id);
+    const food = await this.foodRepository.findOne({id, isActive: true});
     if(!food){
       return{
         statusCode: 400,
@@ -84,9 +84,13 @@ export class FoodService {
     }
   }
 
-  removeFoodById(id: string) {
+  async removeFoodById(id: string) {
     try {
-      return this.foodRepository.delete(id);
+      await this.foodRepository.update({id}, {isActive: false});
+      return {
+        statusCode: 200,
+        message: 'Remove Food successfully',
+      }
     } catch (err) {
       return {
         statusCode: 400,

@@ -44,14 +44,14 @@ export class ShopService {
     const query = this.shopRepository
     .createQueryBuilder('shop')
     .where('shop.isActive = :isActive', { isActive: true })
-    .leftJoinAndSelect('shop.owner', 'shopOwner')
-    .leftJoinAndSelect('shopOwner.user', 'user');
+    .leftJoinAndSelect('shop.owner', 'shopOwner', 'shopOwner.isActive = :isActive', { isActive: true })
+    .leftJoinAndSelect('shopOwner.user', 'user', 'user.isActive = :isActive', { isActive: true });
     const [items, totalItems] =  await query.getManyAndCount();
     return {items, totalItems};
   }
 
   getDetailShop(id: string) {
-    return this.shopRepository.findOne(id);
+    return this.shopRepository.findOne({id, isActive: true});
   }
 
   async updateShopById(shopId: string, input: UpdateShopDTO) {
@@ -62,7 +62,7 @@ export class ShopService {
         message: 'You do not have permission to update this shop',
       };
     }
-    const shop = await this.shopRepository.findOne(shopId);
+    const shop = await this.shopRepository.findOne({id: shopId, isActive: true});
     if(!shop){
       return {
         statusCode: 400,
@@ -87,12 +87,23 @@ export class ShopService {
     }
   }
 
-  removeShopById(id: string) {
-    return this.shopRepository.delete(id);
+  async removeShopById(id: string) {
+    try {
+      await this.shopRepository.update(id, { isActive: false });
+      return {
+        statusCode: 200,
+        message: 'Remove Shop successfully',
+      }
+    } catch (err) {
+      return {
+        statusCode: 400,
+        message: err.message,
+      };
+    }
   }
 
   async findShopByShopName(shopName: string): Promise<ShopEntity> {
-    const user = await this.shopRepository.findOne({ shopName });
+    const user = await this.shopRepository.findOne({ shopName, isActive: true });
     return user;
   }
 

@@ -71,7 +71,18 @@ export class ReviewService {
     return this.reviewRepository.update(id, updateReviewShopDto);
   }
 
-  removeReviewById(id: string) {
-    return this.reviewRepository.delete(id);
+  async removeReviewById(id: string) {
+    try {
+      await this.reviewRepository.update({id}, {isActive: false});
+      return {
+        statusCode: 200,
+        message: 'Remove review successfully',
+      }
+    } catch (err) {
+      return {
+        statusCode: 400,
+        message: err.message,
+      };
+    }
   }
 }
