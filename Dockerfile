@@ -8,7 +8,8 @@ RUN npm install
 
 COPY ./dist ./dist
 
-COPY ./src/views ./dist/views
+COPY ./src/views ./views
+
 COPY ./src/mail/templates ./dist/mail/templates
 
 COPY ./ormconfig.js ./ormconfig.js
