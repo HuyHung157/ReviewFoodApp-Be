@@ -9,6 +9,8 @@ import { MailData } from 'src/mail/interfaces/mail-data.interface';
 import { MailTemplateService } from 'src/mail/services/mail-template.service';
 import { MailService } from 'src/mail/services/mail.service';
 import moment from 'moment-timezone';
+import { Role } from './enums/role.enum';
+import { ShopOwnerService } from 'src/shop/shop-owner.service';
 
 @Injectable()
 export class UserService {
@@ -19,7 +21,7 @@ export class UserService {
     private readonly mailTemplateService: MailTemplateService,
   ) {}
 
-  async createUser(createUserDTO: CreateUserDTO) {
+  async createUser(createUserDTO: CreateUserDTO, isShopOwner: boolean) {
     const errors = await validate(createUserDTO);
     if (errors.length > 0) {
       throw new Error(`Validation failed!`);
@@ -37,6 +39,7 @@ export class UserService {
     const hashedPassword = await this.hashPassword(password);
     const userData = {
       ...createUserDTO,
+      role: isShopOwner ? Role.SHOP_OWNER : Role.USER,
       password: hashedPassword,
     };
 
@@ -54,6 +57,16 @@ export class UserService {
 
   getUserList() {
     return this.userRepository.find({});
+  }
+
+  async getAllShopOwner() {
+    const query = this.userRepository
+    .createQueryBuilder('user')
+    .where('user.role = :role', { role: Role.SHOP_OWNER })
+    .andWhere('user.isActive = :isActive', { isActive: true });
+
+    const [items, totalItems] = await query.getManyAndCount();
+    return { items, totalItems };
   }
 
   getDetailUser(id: string) {
@@ -99,5 +112,13 @@ export class UserService {
       to: user.username,
     };
     await this.mailService.sendMail(data);
+  }
+
+  public async isShopOwnerRole(userId: string): Promise<boolean | {statusCode: number, message: string}> {
+    const user = await this.userRepository.findOne({ id: userId });
+    if (user && user.role === Role.SHOP_OWNER) {
+      return true;
+    }
+    return false;
   }
 }

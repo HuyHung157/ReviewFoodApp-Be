@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateFoodDTO {
   @ApiProperty()
+  userId: string;
+  
+  @ApiProperty()
   foodName: string;
 
   @ApiProperty({ required: false })

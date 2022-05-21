@@ -20,7 +20,13 @@ export class UserController {
   @Post()
   @ApiOperation({ summary: 'Create new user' })
   createUser(@Body() createUserDTO: CreateUserDTO) {
-    return this.userService.createUser(createUserDTO);
+    return this.userService.createUser(createUserDTO, false);
+  }
+
+  @Post('/shop-owner')
+  @ApiOperation({ summary: 'Create new shop owner' })
+  createShopOwner(@Body() createUserDTO: CreateUserDTO) {
+    return this.userService.createUser(createUserDTO, true);
   }
 
   @Get()
@@ -28,6 +34,13 @@ export class UserController {
   @ApiOkResponse({ description: 'List all users' })
   async getUserList() {
     return await this.userService.getUserList();
+  }
+
+  @Get('/shop-owner')
+  @ApiOperation({ summary: 'Get all shop owner' })
+  @ApiOkResponse({ description: 'List all shop owner' })
+  async getAllShopOwner() {
+    return await this.userService.getAllShopOwner();
   }
 
   @Get(':id')

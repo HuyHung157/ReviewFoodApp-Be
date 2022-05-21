@@ -42,10 +42,16 @@ export class ShopController {
     return this.shopService.findShopByShopName(shopName);
   }
 
-  @Put(':id')
+  @Get('/shop-owner/:shopOwnerId')
+  @ApiOperation({ summary: 'Get all shop with owner management' })
+  getListShopByShopOwnerId(@Param('shopOwnerId') shopOwnerId: string) {
+    return this.shopService.getListShopByShopOwnerId(shopOwnerId);
+  }
+
+  @Put(':shopId')
   @ApiOperation({ summary: 'Update shop' })
   updateShopById(
-    @Param('id') id: string,
+    @Param('shopId') id: string,
     @Body() updateShopDto: UpdateShopDTO,
   ) {
     return this.shopService.updateShopById(id, updateShopDto);

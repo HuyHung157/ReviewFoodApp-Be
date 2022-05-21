@@ -1,6 +1,7 @@
 import { FoodEntity } from 'src/food/food.entity';
 import { ReviewEntity } from 'src/review/review.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { ShopOwnerEntity } from './shop-owner.entity';
 
 @Entity({ name: 'shop' })
 export class ShopEntity {
@@ -39,4 +40,7 @@ export class ShopEntity {
 
   @OneToMany(() => FoodEntity, (food) => food.shop, { nullable: true })
   foods?: FoodEntity[];
+
+  @OneToMany(() => ShopOwnerEntity, (owner) => owner.shop, { nullable: true })
+  owner?: ShopOwnerEntity[];
 }

@@ -5,11 +5,14 @@ import { ShopProvider } from './shop.provider';
 import { ShopEntity } from './shop.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from 'src/database/database.module';
+import { ShopOwnerEntity } from './shop-owner.entity';
+import { UserModule } from 'src/user/user.module';
+import { ShopOwnerService } from './shop-owner.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ShopEntity]), DatabaseModule],
+  imports: [TypeOrmModule.forFeature([ShopEntity, ShopOwnerEntity]), DatabaseModule, UserModule],
   controllers: [ShopController],
-  providers: [...ShopProvider, ShopService],
-  exports: [ShopService],
+  providers: [...ShopProvider, ShopService, ShopOwnerService],
+  exports: [ShopService, ShopOwnerService],
 })
 export class ShopModule {}

@@ -16,7 +16,7 @@ export class AuthController {
   @Post('/signUp')
   @ApiOperation({ summary: 'Signup for user' })
   signUp(@Body() createUserDTO: CreateUserDTO) {
-    return this.userService.createUser(createUserDTO);
+    return this.userService.createUser(createUserDTO, false);
   }
 
   @Post('/signIn')

@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ShopService } from 'src/shop/shop.service';
+import { UserService } from 'src/user/user.service';
 import { Repository } from 'typeorm';
 import { CreateFoodDTO } from './dto/create-food.dto';
 import { UpdateFoodDTO } from './dto/update-food.dto';
@@ -11,10 +12,20 @@ export class FoodService {
     @Inject('FOOD_REPOSITORY')
     private readonly foodRepository: Repository<FoodEntity>,
     private readonly shopService: ShopService,
+    private readonly userService: UserService,
   ) {}
 
-  async createFood(res: CreateFoodDTO) {
-    const shop = await this.shopService.getDetailShop(res.shopId);
+  async createFood(input: CreateFoodDTO) {
+    const isShopOwner = await this.shopService.isOwnerShop(input.userId, input.shopId);
+    if(!isShopOwner){
+      return {
+        statusCode: 400,
+        message: 'You do not have permission to create food',
+      };
+    }
+    delete input.userId;
+
+    const shop = await this.shopService.getDetailShop(input.shopId);
     if (!shop) {
       return {
         statusCode: 400,
@@ -22,7 +33,7 @@ export class FoodService {
       };
     }
 
-    await this.foodRepository.save(res);
+    await this.foodRepository.save(input);
     return {
       statusCode: 200,
       message: 'Create Food successfully',
@@ -49,8 +60,28 @@ export class FoodService {
     return this.foodRepository.find({ shopId });
   }
 
-  updateFoodById(id: string, updateFoodDto: UpdateFoodDTO) {
-    return this.foodRepository.update(id, updateFoodDto);
+  async updateFoodById(id: string, input: UpdateFoodDTO) {
+    const food = await this.foodRepository.findOne(id);
+    if(!food){
+      return{
+        statusCode: 400,
+        message: 'Food not found',
+      }
+    }
+    const isShopOwner = await this.userService.isShopOwnerRole(input.userId);
+    if(!isShopOwner){
+      return {
+        statusCode: 400,
+        message: 'You do not have permission to update this food',
+      };
+    }
+    delete input.userId;
+    await this.foodRepository.update(id, input);
+
+    return {
+      statusCode: 200,
+      message: 'Update Food successfully',
+    }
   }
 
   removeFoodById(id: string) {

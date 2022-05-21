@@ -31,12 +31,12 @@ async function bootstrap() {
   console.log(`Swagger running on http://localhost:${PORT}/api`);
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   app.useGlobalPipes(new ValidationPipe());
-  app.useStaticAssets(resolve('./src/public'));
-  app.setBaseViewsDir(resolve('./src/views'));
+  // app.useStaticAssets(resolve('./src/public'));
+  // app.setBaseViewsDir(resolve('./src/views'));
   //USING ON LOCAL
-  // console.log(join('dirname: ', __dirname));
-  // app.useStaticAssets(join(__dirname, '..', 'public'));
-  // app.setBaseViewsDir(join(__dirname, '..', 'views'));
+  console.log(join('dirname: ', __dirname));
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('ejs');
 
   await app.listen(PORT);

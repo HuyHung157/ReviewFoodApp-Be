@@ -2,6 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateShopDTO {
   @ApiProperty()
+  userId: string;
+
+  @ApiProperty()
   shopName: string;
 
   @ApiProperty({ required: false })
