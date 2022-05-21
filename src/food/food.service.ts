@@ -33,7 +33,14 @@ export class FoodService {
       };
     }
 
-    await this.foodRepository.save(input);
+    try{
+      await this.foodRepository.save(input);
+    }catch(err){
+      return {
+        statusCode: 400,
+        message: err.message,
+      };
+    }
     return {
       statusCode: 200,
       message: 'Create Food successfully',

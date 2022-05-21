@@ -46,7 +46,7 @@ export class BookmarkEntity {
   })
   userId: string;
 
-  @OneToOne(() => ShopEntity, (shop) => shop.id)
+  @ManyToOne(() => ShopEntity, (shop) => shop.id)
   @JoinColumn({ name: 'shopId' })
   shop: ShopEntity;
 

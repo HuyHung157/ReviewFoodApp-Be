@@ -37,7 +37,14 @@ export class BookmarkService {
       };
     }
 
-    await this.bookmarkRepository.save(input);
+    try{
+      await this.bookmarkRepository.save(input);
+    }catch(err){
+      return {
+        statusCode: 400,
+        message: err.message,
+      };
+    }
     return {
       statusCode: 200,
       message: 'Create Bookmark successfully',

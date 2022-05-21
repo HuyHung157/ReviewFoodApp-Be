@@ -1,3 +1,4 @@
+import { BookmarkEntity } from 'src/bookmark/bookmark.entity';
 import { FoodEntity } from 'src/food/food.entity';
 import { ReviewEntity } from 'src/review/review.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
@@ -43,4 +44,9 @@ export class ShopEntity {
 
   @OneToMany(() => ShopOwnerEntity, (owner) => owner.shop, { nullable: true })
   owner?: ShopOwnerEntity[];
+
+  @OneToMany(() => BookmarkEntity, (bookmark) => bookmark.user, {
+    nullable: true,
+  })
+  bookmarks?: BookmarkEntity[];
 }
