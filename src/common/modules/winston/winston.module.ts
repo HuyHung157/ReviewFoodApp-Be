@@ -11,7 +11,7 @@ import 'winston-daily-rotate-file';
     BaseWinstonModule.forRootAsync({
       imports: [],
       useFactory: async () => {
-        const transports = false
+        const transports = true
           ? [
               new winston.transports.DailyRotateFile({
                 filename: process.env.WINSTON_LOG_ERROR_FILE_NAME || 'error-%DATE%.log',
