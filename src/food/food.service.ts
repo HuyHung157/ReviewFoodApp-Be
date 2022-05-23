@@ -16,8 +16,11 @@ export class FoodService {
   ) {}
 
   async createFood(input: CreateFoodDTO) {
-    const isShopOwner = await this.shopService.isOwnerShop(input.userId, input.shopId);
-    if(!isShopOwner){
+    const isShopOwner = await this.shopService.isOwnerShop(
+      input.userId,
+      input.shopId,
+    );
+    if (!isShopOwner) {
       return {
         statusCode: 400,
         message: 'You do not have permission to create food',
@@ -33,18 +36,18 @@ export class FoodService {
       };
     }
 
-    try{
+    try {
       await this.foodRepository.save(input);
-    }catch(err){
+      return {
+        statusCode: 200,
+        message: 'Create Food successfully',
+      };
+    } catch (err) {
       return {
         statusCode: 400,
         message: err.message,
       };
     }
-    return {
-      statusCode: 200,
-      message: 'Create Food successfully',
-    };
   }
 
   getFoodList() {
@@ -52,7 +55,7 @@ export class FoodService {
   }
 
   getDetailFood(id: string) {
-    return this.foodRepository.findOne({id, isActive: true});
+    return this.foodRepository.findOne({ id, isActive: true });
   }
 
   async getListFoodByShopId(shopId: string) {
@@ -63,41 +66,46 @@ export class FoodService {
         message: 'Shop not found',
       };
     }
-
     return this.foodRepository.find({ shopId, isActive: true });
   }
 
   async updateFoodById(id: string, input: UpdateFoodDTO) {
-    const food = await this.foodRepository.findOne({id, isActive: true});
-    if(!food){
-      return{
+    const food = await this.foodRepository.findOne({ id, isActive: true });
+    if (!food) {
+      return {
         statusCode: 400,
         message: 'Food not found',
-      }
+      };
     }
     const isShopOwner = await this.userService.isShopOwnerRole(input.userId);
-    if(!isShopOwner){
+    if (!isShopOwner) {
       return {
         statusCode: 400,
         message: 'You do not have permission to update this food',
       };
     }
     delete input.userId;
-    await this.foodRepository.update(id, input);
-
-    return {
-      statusCode: 200,
-      message: 'Update Food successfully',
+    try {
+      await this.foodRepository.update(id, input);
+      return {
+        statusCode: 200,
+        message: 'Update Food successfully',
+      };
+    } catch (err) {
+      return {
+        statusCode: 400,
+        message: err.message,
+      };
     }
   }
 
   async removeFoodById(id: string) {
     try {
-      await this.foodRepository.update({id}, {isActive: false});
+      await this.foodRepository.update({ id }, { isActive: false });
       return {
         statusCode: 200,
         message: 'Remove Food successfully',
-      }
+      };
     } catch (err) {
       return {
         statusCode: 400,

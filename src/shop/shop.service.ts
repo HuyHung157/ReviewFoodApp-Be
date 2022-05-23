@@ -26,6 +26,7 @@ export class ShopService {
     }
     const userId = input.userId;
     delete input.userId;
+    
     const shop = await this.shopRepository.save(input);
     if(!shop){
       return {
@@ -33,7 +34,14 @@ export class ShopService {
         message: 'Create shop failed',
       };
     }
-    await this.shopOwnerService.createShopOwner(userId, shop.id);
+    try {
+      await this.shopOwnerService.createShopOwner(userId, shop.id);
+    } catch (error) {
+      return{
+        statusCode: 400,
+        message: error.message,
+      }
+    }
     return {
       statusCode: 200,
       message: 'Create Shop successfully',
@@ -80,10 +88,17 @@ export class ShopService {
       };
     }
     delete input.userId;
-    await this.shopRepository.update(shopId, input);
-    return {
-      statusCode: 200,
-      message: 'Update Shop successfully',
+    try {
+      await this.shopRepository.update(shopId, input);
+      return {
+        statusCode: 200,
+        message: 'Update Shop successfully',
+      }
+    } catch (error) {
+      return{
+        statusCode: 400,
+        message: error.message,
+      }
     }
   }
 

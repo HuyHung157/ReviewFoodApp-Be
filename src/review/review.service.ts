@@ -37,11 +37,18 @@ export class ReviewService {
       ...data,
       isActive: true,
     };
-    await this.reviewRepository.save(review);
-    return {
-      statusCode: 200,
-      message: 'Create Review successfully',
-    };
+    try {
+      await this.reviewRepository.save(review);
+      return {
+        statusCode: 200,
+        message: 'Create Review successfully',
+      };
+    } catch (err) {
+      return {
+        statusCode: 400,
+        message: err.message,
+      };
+    }
   }
 
   async getListReviewByShopId(id) {
@@ -73,11 +80,11 @@ export class ReviewService {
 
   async removeReviewById(id: string) {
     try {
-      await this.reviewRepository.update({id}, {isActive: false});
+      await this.reviewRepository.update({ id }, { isActive: false });
       return {
         statusCode: 200,
         message: 'Remove review successfully',
-      }
+      };
     } catch (err) {
       return {
         statusCode: 400,

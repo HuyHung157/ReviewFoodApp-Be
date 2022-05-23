@@ -78,10 +78,17 @@ export class BookmarkService {
   }
 
   async updateBookMarkById(id: string, input: UpdateBookMarkDTO) {
-    await this.bookmarkRepository.update(id, input);
-    return {
-      statusCode: 200,
-      message: 'Update Bookmark successfully',
+    try {
+      await this.bookmarkRepository.update(id, input);
+      return {
+        statusCode: 200,
+        message: 'Update Bookmark successfully',
+      }
+    } catch (err) {
+      return {
+        statusCode: 400,
+        message: err.message,
+      };
     }
   }
 

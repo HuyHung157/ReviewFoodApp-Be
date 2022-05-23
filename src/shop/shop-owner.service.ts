@@ -28,7 +28,7 @@ export class ShopOwnerService {
     .createQueryBuilder('shopOwner')
     .andWhere('shopOwner.userId = :userId', { userId: user.id })
     .andWhere('shopOwner.isActive = :isActive', { isActive: true })
-    .innerJoinAndSelect('shopOwner.shop', 'shop');
+    .innerJoinAndSelect('shopOwner.shop', 'shop', 'shop.isActive = :isActive', { isActive: true });
 
     const items = await query.getMany();
     return items;
